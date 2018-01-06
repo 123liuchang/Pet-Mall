@@ -1,3 +1,6 @@
-/**
- * Created by dell on 2018/1/4.
- */
+export default {
+  GET_HOME(state,{home}){
+    // console.log(home)
+    state.home = home
+  },
+}

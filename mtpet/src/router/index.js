@@ -7,6 +7,7 @@ const classifys = () => import('../pages/classifys/classifys.vue')  // import函
 const mainpage = () => import('../pages/mainpage/mainpage.vue')
 const mypet = () => import('../pages/mypet/mypet.vue')
 const shopping = () => import('../pages/shopping/shopping.vue')
+
 // 所有路由的数组   //都是外层的路由
 const routes = [
   // 地址为空时跳转mainpage页面
@@ -44,7 +45,7 @@ const routes = [
     path: '/mypet',
     component: mypet,
     meta: {keepAlive: true, isTop: true},
-  },
+  }
 ]
 
 export default new VueRouter({

@@ -7,7 +7,7 @@
           <a class="db">
             <span class="catordog c89">猫猫</span>
             <span class="c89">|</span>
-            <span class="myposition c89 ft13">北京</span>
+            <span class="myposition" >北京</span>
             <i></i>
           </a>
           <input type="search" placeholder="搜索商品和品牌" disabled="disabled">
@@ -15,92 +15,35 @@
         </div>
       </div>
       <div class="ulNav" ref="ulNav" style="width: 100%">
-        <ul class="headerNav" style="width: 140%">
-          <li><a href="">首页</a></li>
-          <li><a href="">服饰城</a></li>
-          <li><a href="">狗狗主粮</a></li>
-          <li><a href="">医疗保健</a></li>
-          <li><a href="">零食玩具</a></li>
-          <li><a href="">日用外出</a></li>
-          <li><a href="">美容香波</a></li>
+        <ul class="headerNav" style="width: 140%" v-if="home">
+          <li v-for="(menu, index) in home.menus" :key="index">
+            <a :href="menu.menu_target">
+              {{menu.menu_name}}
+            </a>
+          </li>
         </ul>
       </div>
     </div>
     <scroller>  <!--应用于上下滑动更新-->
-    <div class="imgWrap">
+    <div class="imgWrap" v-if="home.datas">
+
       <mt-swipe :auto="1110">
-        <mt-swipe-item>
-          <img src="../../img/imgs/5e8757de6f5b78bf3bf3758d292fc5eb.jpg" alt="">
-        </mt-swipe-item>
-        <mt-swipe-item>
-          <img src="../../img/imgs/28f41bd18763058369b9f2005f4bb326.jpg" alt="">
-        </mt-swipe-item>
-        <mt-swipe-item>
-          <img src="../../img/imgs/688cf171f0f735cd88ec62c0684079d8.jpg" alt="">
-        </mt-swipe-item>
-        <mt-swipe-item>
-          <img src="../../img/imgs/1437da9866bfab00d8f8e5d5265c7d33.jpg" alt="">
-        </mt-swipe-item>
-        <mt-swipe-item>
-          <img src="../../img/imgs/476488fa886d0dce88c17e1a1def4543.jpg" alt="">
+        <mt-swipe-item v-for="(val,index) in home.datas[0].value" :key="index">
+          <a :href="val.target.param">
+            <img :src="val.image" alt="">
+          </a>
         </mt-swipe-item>
       </mt-swipe>
     </div>
 
-    <div class="columnnavdiv">
+    <div class="columnnavdiv" v-if="home.datas">
       <div>
         <ul class="hottype">
-          <li>
-            <a href="">
-              <img src="../../img/imgs/c0372b31b110dcbda589da4cb26f19c5.jpg" alt="">
+          <li v-for="(men,index) in home.datas[1].menus" :key="index">
+            <a :href="men.target.param">
+              <img :src="men.image" alt="">
             </a>
           </li>
-          <li>
-            <a href="">
-              <img src="../../img/imgs/b88234ac2e2cf0f2c6c36f5576e1acd3.jpg" alt="">
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <img src="../../img/imgs/c1ebce34a16eadda5a934c142f9eab98.jpg" alt="">
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <img src="../../img/imgs/2ed81f515a9287d05d555a0efeb4fdc6.jpg" alt="">
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <img src="../../img/imgs/ac5e9b46a46304ca486b50b229b0a65b.jpg" alt="">
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <img src="../../img/imgs/7bc4685f6809012964043ff2599e093f.jpg" alt="">
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <img src="../../img/imgs/2ac1504b1cd475560903ec8bbb48ff10.jpg" alt="">
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <img src="../../img/imgs/d9a2f4d0f5a458245761e7bbb0fdf2e9.jpg" alt="">
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <img src="../../img/imgs/bdef0401534ff876873138c92916f849.jpg" alt="">
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <img src="../../img/imgs/b49c1cfa039724a157843d09a88b854e.jpg" alt="">
-            </a>
-          </li>
-
         </ul>
       </div>
     </div>
@@ -108,76 +51,44 @@
       <div class="page-line"></div>
     </div>
 
-    <div class="swiper-slide">
-      <a href="">
-        <img src="../../img/imgs/5a3f9a270c73b55bd2525b0578e47782.gif" alt="">
+    <div class="swiper-slide" v-if="home.datas">
+      <a :href="home.datas[4].target.param">
+        <img :src="home.datas[4].image" alt="">
       </a>
     </div>
 
     <div class="surprise_day">
-      <div class="surprise-tit">
+      <div class="surprise-tit" v-if="home.data">
         <div class="titimg">
-          <img src="../../img/imgs/suprice.png" alt="">
+          <img :src="home.data.right_image.image" alt="">
         </div>
-        <div class="ft13">
-          距本场结束
-        </div>
-        <div class="time">
-          <span class="time1-1">00</span>
-          <span class="time-zi ft12">:</span>
-          <span class="time1-1">00</span>
-          <span class="time-zi ft12">:</span>
-          <span class="time1-1">00</span>
+        <div class="ft13">{{home.data.title}}</div>
+        <div class="fl surprise-time hide" style="display: none">{{home.data.time}}</div>
+
+        <!--获取当前时间-->
+        <div class="time ftc fl ml5">
+          <div class="time1 dib clearfix ft12 dtime">
+            <span class="time1-1">{{hour}}</span>
+            <span class="time-zi ft12">:</span>
+            <span class="time1-1">{{min}}</span>
+            <span class="time-zi ft12">:</span>
+            <span class="time1-1">{{sec}}</span>
+          </div>
         </div>
         <div class="more">
-          <a href="">
+          <a href="###">
             <img src="../../img/123.jpg" alt="">
           </a>
         </div>
       </div>
 
       <div class="surprise" ref="surprise" style="width: 100%">
-        <ul class="surprisew" style="width: 200%">
-          <li>
+        <ul class="surprisew" style="width:200%" v-if="home.data">
+          <li style="margin-right: 20px" v-for="(good,index) in home.data.goods" :key="index">
             <a href="" class="imga">
-              <img src="../../img/imgs/1af8a1d121219361dbc60fa0b78be7de.jpg" alt="">
-              <span>¥3.5</span>
-              <p class="c999">￥31.50</p>
-            </a>
-          </li>
-          <li>
-            <a href="" class="imga">
-              <img src="../../img/imgs/8c6b4e0cc2c0fc940e9476c27b197d14.jpg" alt="">
-              <span>¥3.5</span>
-              <p class="c999">￥31.50</p>
-            </a>
-          </li>
-          <li>
-            <a href="" class="imga">
-              <img src="../../img/imgs/927e5a8c3f7eb4360e1b186f84e5a8d4.jpg" alt="">
-              <span>¥3.5</span>
-              <p class="c999">￥31.50</p>
-            </a>
-          </li>
-          <li>
-            <a href="" class="imga">
-              <img src="../../img/imgs/5281dcf6fe7a68b2d9ed14b125cdd215.jpg" alt="">
-              <span>¥3.5</span>
-              <p class="c999">￥31.50</p>
-            </a>
-          </li>
-          <li>
-            <a href="" class="imga">
-              <img src="../../img/imgs/f004ccf209d012070a2697ac546e2f8f.jpg" alt="">
-              <span>¥3.5</span>
-              <p class="c999">￥31.50</p>
-            </a>
-          </li>
-          <li>
-            <a href="" class="imga">
-              <img src="../../img/imgs/8c6b4e0cc2c0fc940e9476c27b197d14.jpg" alt="">
-              <span>¥3.5</span>
-              <p class="c999">￥31.50</p>
+              <img :src="good.image.image" alt="">
+              <span>{{good.sale_price}}</span>
+              <p class="c999">{{good.little_price}}</p>
             </a>
           </li>
         </ul>
@@ -198,28 +109,79 @@
 
 <script>
   import BScroll from 'better-scroll'
-  import indexbox from "../../components/indexbox/indexbox.vue"
+  import indexbox from "../../components/indexbox/indexbox.vue"  /*接收贴边小宠*/
+  import {mapState} from "vuex"
 
   /*滑动库*/
   export default{
-    mounted(){ /*马上*/
-      /*首页头滑动*/
-      new BScroll(this.$refs.ulNav, {click: true, scrollX: true});
-      new BScroll(this.$refs.surprise, {click: true, scrollX: true})
+    data(){
+      return{
+        hour: '00',
+        min: '00',
+        sec: '00',
+        timer: 0,
+      }
     },
-    components:{  /*接收组件*/
+
+
+    mounted(){ /*马上*/       //请求
+      this.$store.dispatch("getHome",()=>{
+        this.$nextTick(()=>{              /*首页头滑动*/
+          new BScroll(this.$refs.ulNav, {click: true, scrollX: true})
+          new BScroll(this.$refs.surprise, {click: true, scrollX: true})
+        })
+      })
+
+    },
+    computed:{  /*计算*/
+      ...mapState(["home"])
+    },
+    components:{  /*接收组件,使用组件 在上面写入组件标签*/
       indexbox
     },
+
+    watch: {
+      home(){
+//        if (this.scroll) {
+//          this.scroll.refresh()
+//        } else {
+//          this.$nextTick(() => {
+//            console.log('this.$refs.sps', this.$refs.sps);
+//            this.scroll = new BScroll(this.$refs.sps, {click: true, scrollX: true})
+//          })
+//        }
+        let endTime = this.home.data.time
+        let date = parseInt((new Date()).getTime().toString().slice(0, 10))
+        this.timer = setInterval(() => {
+          date--
+          let timeDiff = date - endTime
+          let hour = Math.floor(timeDiff / 3600)
+          let min = Math.floor((timeDiff - hour * 3600) / 60)
+          let sec = -(endTime - date) % 60
+          this.hour = ('' + hour).length == 1 ? '0' + hour : hour
+          this.min = ('' + min).length == 1 ? '0' + min : min
+          this.sec = ('' + sec).length == 1 ? '0' + sec : sec
+
+        }, 1000)
+      }
+    },
+
+    beforeDestroy(){
+      clearInterval(this.timer)
+    },
+
+
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   .header
     width: 100%
-    height: 142px
+    height: 150px
     position fixed
     top: 0
-    z-index 1
+    z-index 5
+    background-color antiquewhite
     img
       display block
       width: 100%
@@ -227,7 +189,7 @@
     .clearfix
       position relative
       width: 100%
-      height: 51px
+      height: 40px
       margin 5px 10px
       .epet-search
         width: 355px
@@ -270,16 +232,16 @@
           width: 20px
           height: 20px
     .ulNav
-      height: 36px;
+      height: 26px;
       position: relative;
       .headerNav
         height: 36px;
+        line-height 36px
         li
           float: left;
           width: 74px;
-          height: 36px;
+          height: 26px;
           text-align: center;
-          line-height: 36px;
           a
             font-size: 14px;
             color: #666

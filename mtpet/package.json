@@ -14,7 +14,8 @@
     "better-scroll": "^1.7.2",
     "mint-ui": "^2.2.13",
     "vue": "^2.3.3",
-    "vue-scroller": "^2.2.4"
+    "vue-scroller": "^2.2.4",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

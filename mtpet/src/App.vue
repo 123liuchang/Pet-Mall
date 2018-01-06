@@ -6,6 +6,7 @@
         <li><router-link to='/shopping'>购物车</router-link></li>
         <li><router-link to='/mypet'>Q宠</router-link></li>
       </ul>
+
       <router-view></router-view> <!--包含各个组件-->
     </div>
 </template>
